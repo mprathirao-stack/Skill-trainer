@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Curriculum Checklist — Aug 2026 to Feb 2027</title>
+<style>
+  :root {
+    --bg: #fdfbf8;
+    --card: #ffffff;
+    --text: #1f1b16;
+    --muted: #6b6258;
+    --border: #e7e0d6;
+    --accent: #b5551f;
+    --accent-bg: #f7e9dd;
+    --stretch: #8a6d3b;
+    --stretch-bg: #f5ecd8;
+    --warn-bg: #fbe9e7;
+    --warn-border: #d9765a;
+    --warn-text: #7a2f18;
+    --ok-bg: #eaf3ea;
+    --ok-border: #6ca36c;
+    --ok-text: #2d5a2d;
+    --done-bg: #f2f7f1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17140f;
+      --card: #221e17;
+      --text: #f1ece2;
+      --muted: #a89d8c;
+      --border: #3a3327;
+      --accent: #e08a4f;
+      --accent-bg: #3a2a1a;
+      --stretch: #d9c07f;
+      --stretch-bg: #322c1a;
+      --warn-bg: #3a2019;
+      --warn-border: #b5573a;
+      --warn-text: #f0b3a0;
+      --ok-bg: #1e2c1e;
+      --ok-border: #4d7a4d;
+      --ok-text: #9fcf9f;
+      --done-bg: #1c2019;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+  h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
+  .sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 1.5rem; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+  }
+  .stat .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+  .stat .value { font-size: 1.3rem; font-weight: 600; margin-top: 0.15rem; }
+
+  .progress-outer {
+    height: 10px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .progress-inner {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.25s ease;
+  }
+
+  .banner {
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border: 1px solid;
+  }
+  .banner.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-text); }
+  .banner.ok { background: var(--ok-bg); border-color: var(--ok-border); color: var(--ok-text); }
+  .banner strong { display: block; margin-bottom: 0.25rem; }
+  .banner ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+
+  .month {
+    margin-bottom: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .month-header {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .month-header h2 { font-size: 1rem; margin: 0; }
+  .month-header .range { font-size: 0.78rem; color: var(--muted); }
+  .month-header .count { font-size: 0.78rem; color: var(--muted); }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .task:last-child { border-bottom: none; }
+  .task.done { background: var(--done-bg); }
+  .task input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+  }
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 0.92rem; }
+  .task.done .task-title { color: var(--muted); text-decoration: line-through; }
+  .task-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--stretch-bg);
+    color: var(--stretch);
+    font-weight: 600;
+  }
+  .adjusted { color: var(--accent); font-weight: 600; }
+
+  .footer-actions {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .footer-actions button, .footer-actions label {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .footer-actions input[type="file"] { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Curriculum Checklist</h1>
+  <p class="sub">August 1, 2026 → February 28, 2027. Check items off as you finish them — the schedule below recalculates automatically if you fall behind.</p>
+
+  <div class="stats" id="stats"></div>
+  <div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+  <div id="banner"></div>
+  <div id="months"></div>
+
+  <div class="footer-actions">
+    <span id="lastUpdated"></span>
+    <button id="exportBtn" type="button">Export backup (.json)</button>
+    <label for="importFile">Import backup
+      <input type="file" id="importFile" accept="application/json" />
+    </label>
+    <button id="resetBtn" type="button">Reset all progress</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Task data: title, days = planned duration, stretch = droppable if you're behind ----
+  var TASKS = [
+    { id: "aug-1", month: "August 2026", title: "Computer, files, and terminal fundamentals", days: 4 },
+    { id: "aug-2", month: "August 2026", title: "Git & GitHub (commits, branches, PRs, README)", days: 4 },
+    { id: "aug-3", month: "August 2026", title: "Python fundamentals: variables, conditionals, loops, functions, collections", days: 7 },
+    { id: "aug-4", month: "August 2026", title: "Python: exceptions & virtual environments", days: 3 },
+    { id: "aug-5", month: "August 2026", title: "Introductory SQL: SELECT / WHERE / GROUP BY / JOIN, schema basics", days: 6 },
+    { id: "aug-6", month: "August 2026", title: "HTML/CSS fundamentals & the client-server model", days: 4 },
+    { id: "aug-7", month: "August 2026", title: "Debugging practice + push exercises to a public GitHub learning log", days: 3 },
+
+    { id: "sep-1", month: "September 2026", title: "Intermediate Python: OOP & type hints", days: 4 },
+    { id: "sep-2", month: "September 2026", title: "Testing with pytest & logging", days: 2 },
+    { id: "sep-3", month: "September 2026", title: "Data structures & algorithms basics (arrays, hash maps, trees, recursion, Big-O)", days: 6 },
+    { id: "sep-4", month: "September 2026", title: "PostgreSQL & advanced SQL (window functions, CTEs, indexes, transactions)", days: 6 },
+    { id: "sep-5", month: "September 2026", title: "Probability & statistics fundamentals", days: 5 },
+    { id: "sep-6", month: "September 2026", title: "pandas & NumPy on a real dataset", days: 3 },
+    { id: "sep-7", month: "September 2026", title: "JavaScript → TypeScript → React fundamentals", days: 3 },
+    { id: "sep-8", month: "September 2026", title: "Resume / LinkedIn / GitHub baseline + start networking", days: 1 },
+
+    { id: "oct-1", month: "October 2026", title: "REST API design & HTTP fundamentals", days: 3 },
+    { id: "oct-2", month: "October 2026", title: "FastAPI basics: endpoints & Pydantic validation", days: 5 },
+    { id: "oct-3", month: "October 2026", title: "PostgreSQL schema design for Project A", days: 3 },
+    { id: "oct-4", month: "October 2026", title: "Redis caching", days: 3 },
+    { id: "oct-5", month: "October 2026", title: "Docker & docker-compose", days: 3 },
+    { id: "oct-6", month: "October 2026", title: "Automated, integration & load testing", days: 4 },
+    { id: "oct-7", month: "October 2026", title: "CI & deployment to a live URL", days: 3 },
+    { id: "oct-8", month: "October 2026", title: "Reliability dashboard (logging & metrics)", days: 2, stretch: true },
+    { id: "oct-9", month: "October 2026", title: "Finish Project A end-to-end + README; apply to backend roles", days: 5 },
+
+    { id: "nov-1", month: "November 2026", title: "A/B test design: randomization & sample-size/power", days: 5 },
+    { id: "nov-2", month: "November 2026", title: "Common pitfalls: Type I/II errors, multiple comparisons, novelty effects, bias", days: 4 },
+    { id: "nov-3", month: "November 2026", title: "CUPED & sequential-testing awareness", days: 3, stretch: true },
+    { id: "nov-4", month: "November 2026", title: "scikit-learn basics: splits, regression/classification, evaluation metrics", days: 5 },
+    { id: "nov-5", month: "November 2026", title: "Airflow & automated data-quality checks", days: 4 },
+    { id: "nov-6", month: "November 2026", title: "Build Project B: simulate data, SQL metrics, statistical analysis", days: 6 },
+    { id: "nov-7", month: "November 2026", title: "Write stakeholder memo; apply to data roles", days: 3 },
+
+    { id: "dec-1", month: "December 2026", title: "Product thinking & writing a real PRD", days: 4 },
+    { id: "dec-2", month: "December 2026", title: "Trust & Safety fundamentals: queues, escalation, operational metrics", days: 4 },
+    { id: "dec-3", month: "December 2026", title: "AI-assisted workflows done responsibly (human-in-the-loop)", days: 2, stretch: true },
+    { id: "dec-4", month: "December 2026", title: "Figma, UX research & information architecture", days: 5 },
+    { id: "dec-5", month: "December 2026", title: "Design system & accessibility polish", days: 3, stretch: true },
+    { id: "dec-6", month: "December 2026", title: "React/TypeScript refinement: generics, forms, routing", days: 4 },
+    { id: "dec-7", month: "December 2026", title: "Build Project C: Trust & Safety console + design case study", days: 7 },
+    { id: "dec-8", month: "December 2026", title: "Start weekly mock interviews", days: 2 },
+
+    { id: "jan-1", month: "January 2027", title: "Digital advertising vocabulary & metrics", days: 3 },
+    { id: "jan-2", month: "January 2027", title: "Event tracking: browser pixels vs. server-side conversion APIs", days: 4 },
+    { id: "jan-3", month: "January 2027", title: "Deduplication & attribution windows", days: 5 },
+    { id: "jan-4", month: "January 2027", title: "Identity matching / entity resolution (introductory)", days: 3, stretch: true },
+    { id: "jan-5", month: "January 2027", title: "Funnel analysis & dashboarding", days: 3, stretch: true },
+    { id: "jan-6", month: "January 2027", title: "Build Project D: event pipeline, dashboard & troubleshooting playbook", days: 8 },
+    { id: "jan-7", month: "January 2027", title: "Narrow to your primary track; tailor applications", days: 5 },
+
+    { id: "feb-1", month: "February 2027", title: "Polish every project README; fix flaky deployments", days: 4 },
+    { id: "feb-2", month: "February 2027", title: "Build a personal portfolio site", days: 4 },
+    { id: "feb-3", month: "February 2027", title: "Tailor 2–3 resume versions", days: 2 },
+    { id: "feb-4", month: "February 2027", title: "Prepare 6 STAR-format behavioral stories", days: 3 },
+    { id: "feb-5", month: "February 2027", title: "Drill SQL, coding & statistics interview questions", days: 4 },
+    { id: "feb-6", month: "February 2027", title: "System-design walkthrough practice (Project A at 100x scale)", days: 2, stretch: true },
+    { id: "feb-7", month: "February 2027", title: "Rehearse design-portfolio presentation", days: 2, stretch: true },
+    { id: "feb-8", month: "February 2027", title: "Run 2+ mock interviews per week", days: 4 },
+    { id: "feb-9", month: "February 2027", title: "Focused applications; write your next-12-months plan", days: 3 }
+  ];
+
+  var STORAGE_KEY = "career-curriculum-checklist-v1";
+  var START = Date.UTC(2026, 7, 1);   // Aug 1, 2026
+  var TARGET_FINISH = Date.UTC(2027, 1, 28); // Feb 28, 2027
+  var DAY_MS = 86400000;
+
+  function addDays(utcMs, days) { return utcMs + days * DAY_MS; }
+  function todayUTC() {
+    var d = new Date();
+    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+  function fmt(utcMs) {
+    return new Date(utcMs).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  }
+
+  // ---- planned (fixed, ideal) schedule ----
+  var planned = [];
+  (function () {
+    var cursor = START;
+    for (var i = 0; i < TASKS.length; i++) {
+      var start = cursor;
+      var end = addDays(cursor, TASKS[i].days - 1);
+      planned.push({ start: start, end: end });
+      cursor = addDays(end, 1);
+    }
+  })();
+
+  function loadState() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { done: {} };
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object" && typeof parsed.done === "object") return parsed;
+      return { done: {} };
+    } catch (e) {
+      return { done: {} };
+    }
+  }
+  function saveState(state) {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    document.getElementById("lastUpdated").textContent =
+      "Saved locally in this browser · " + new Date().toLocaleTimeString();
+  }
+
+  var state = loadState();
+
+  function firstUncheckedIndex() {
+    for (var i = 0; i < TASKS.length; i++) {
+      if (!state.done[TASKS[i].id]) return i;
+    }
+    return TASKS.length; // everything done
+  }
+
+  function render() {
+    var today = todayUTC();
+    var idx = firstUncheckedIndex();
+    var allDone = idx >= TASKS.length;
+
+    // How far off-schedule is the current task versus its ideal planned start?
+    var daysOffset = 0;
+    if (!allDone) {
+      daysOffset = Math.round((today - planned[idx].start) / DAY_MS);
+    }
+
+    // Adjusted dates: shift every task from idx onward by daysOffset (can be negative = ahead).
+    var adjusted = planned.map(function (p) { return { start: p.start, end: p.end }; });
+    if (!allDone && daysOffset !== 0) {
+      for (var j = idx; j < TASKS.length; j++) {
+        adjusted[j] = { start: adjusted[j].start + daysOffset * DAY_MS, end: adjusted[j].end + daysOffset * DAY_MS };
+      }
+    }
+
+    var projectedFinish = allDone ? planned[planned.length - 1].end : adjusted[adjusted.length - 1].end;
+    var lateByDays = Math.round((projectedFinish - TARGET_FINISH) / DAY_MS);
+
+    // Stretch tasks still remaining (not done, at/after current position) that could be dropped to recover time.
+    var recoverable = [];
+    var recoverableDays = 0;
+    for (var k = idx; k < TASKS.length; k++) {
+      if (TASKS[k].stretch && !state.done[TASKS[k].id]) {
+        recoverable.push(TASKS[k]);
+        recoverableDays += TASKS[k].days;
+      }
+    }
+
+    // ---- stats ----
+    var doneCount = TASKS.filter(function (t) { return state.done[t.id]; }).length;
+    var pct = Math.round((doneCount / TASKS.length) * 100);
+    document.getElementById("progressBar").style.width = pct + "%";
+
+    var statsHtml = "";
+    statsHtml += statBlock("Completed", doneCount + " / " + TASKS.length + " (" + pct + "%)");
+    statsHtml += statBlock("Target finish", fmt(TARGET_FINISH));
+    statsHtml += statBlock("Projected finish", fmt(projectedFinish));
+    statsHtml += statBlock(daysOffset > 0 ? "Behind schedule" : daysOffset < 0 ? "Ahead of schedule" : "On schedule",
+      allDone ? "—" : Math.abs(daysOffset) + " day" + (Math.abs(daysOffset) === 1 ? "" : "s"));
+    document.getElementById("stats").innerHTML = statsHtml;
+
+    // ---- banner ----
+    var bannerEl = document.getElementById("banner");
+    if (allDone) {
+      bannerEl.innerHTML = '<div class="banner ok"><strong>All tasks complete.</strong> Nice work — review February’s "next 12 months" item to plan what comes after this sprint.</div>';
+    } else if (lateByDays > 0) {
+      var html = '<div class="banner warn"><strong>At this pace you’ll finish ' + lateByDays + ' day' + (lateByDays === 1 ? "" : "s") + ' after your Feb 28, 2027 target.</strong>';
+      if (recoverable.length > 0) {
+        html += " Skipping the stretch item" + (recoverable.length === 1 ? "" : "s") + " below would recover about " + recoverableDays + " day" + (recoverableDays === 1 ? "" : "s") + (recoverableDays >= lateByDays ? " — enough to get back on track:" : ", which helps but won’t fully close the gap on its own — consider also adding a few hours/week:") + "<ul>";
+        recoverable.forEach(function (t) { html += "<li>" + t.title + " (" + t.days + "d)</li>"; });
+        html += "</ul>";
+      } else {
+        html += " There are no remaining stretch items left to cut — consider adding a few hours per week to catch up.";
+      }
+      html += "</div>";
+      bannerEl.innerHTML = html;
+    } else {
+      bannerEl.innerHTML = "";
+    }
+
+    // ---- task list grouped by month ----
+    var months = [];
+    var monthIndex = {};
+    TASKS.forEach(function (t, i) {
+      if (!(t.month in monthIndex)) {
+        monthIndex[t.month] = months.length;
+        months.push({ name: t.month, taskIdx: [] });
+      }
+      months[monthIndex[t.month]].taskIdx.push(i);
+    });
+
+    var monthsHtml = "";
+    months.forEach(function (m) {
+      var first = m.taskIdx[0], last = m.taskIdx[m.taskIdx.length - 1];
+      var monthDoneCount = m.taskIdx.filter(function (i) { return state.done[TASKS[i].id]; }).length;
+      monthsHtml += '<div class="month"><div class="month-header"><h2>' + m.name + '</h2>' +
+        '<span class="range">' + fmt(planned[first].start) + ' – ' + fmt(planned[last].end) + '</span>' +
+        '<span class="count">' + monthDoneCount + '/' + m.taskIdx.length + ' done</span></div>';
+
+      m.taskIdx.forEach(function (i) {
+        var t = TASKS[i];
+        var done = !!state.done[t.id];
+        var showAdjusted = !done && !allDone && daysOffset !== 0 && i >= idx;
+        monthsHtml += '<div class="task' + (done ? " done" : "") + '">' +
+          '<input type="checkbox" data-id="' + t.id + '" ' + (done ? "checked" : "") + ' aria-label="Mark ‘' + t.title.replace(/"/g, "&quot;") + '’ as done" />' +
+          '<div class="task-body"><div class="task-title">' + t.title + '</div>' +
+          '<div class="task-meta">' +
+          (t.stretch ? '<span class="badge">stretch</span>' : "") +
+          '<span>' + fmt(planned[i].start) + ' – ' + fmt(planned[i].end) + '</span>' +
+          (showAdjusted ? '<span class="adjusted">→ adjusted: ' + fmt(adjusted[i].start) + ' – ' + fmt(adjusted[i].end) + '</span>' : "") +
+          '</div></div></div>';
+      });
+      monthsHtml += "</div>";
+    });
+    document.getElementById("months").innerHTML = monthsHtml;
+
+    // wire checkboxes
+    document.querySelectorAll('.task input[type="checkbox"]').forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        var id = cb.getAttribute("data-id");
+        if (cb.checked) state.done[id] = true;
+        else delete state.done[id];
+        saveState(state);
+        render();
+      });
+    });
+  }
+
+  function statBlock(label, value) {
+    return '<div class="stat"><div class="label">' + label + '</div><div class="value">' + value + '</div></div>';
+  }
+
+  // ---- export / import / reset ----
+  document.getElementById("exportBtn").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "curriculum-checklist-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("importFile").addEventListener("change", function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var parsed = JSON.parse(String(reader.result));
+        if (parsed && typeof parsed === "object" && typeof parsed.done === "object") {
+          state = parsed;
+          saveState(state);
+          render();
+        } else {
+          alert("That file doesn't look like a valid backup.");
+        }
+      } catch (err) {
+        alert("Couldn't read that file as JSON.");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (window.confirm("Reset all checked-off progress? This can't be undone (unless you've exported a backup).")) {
+      state = { done: {} };
+      saveState(state);
+      render();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

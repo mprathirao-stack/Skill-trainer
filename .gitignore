@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# vendored SearXNG clone + its Python venv (129MB+, has its own git history)
+searxng-instance/
+
+# secrets - never commit real credentials
+.env
+.env.local
+.env.*.local
+server/.env
+
+# build output
+client/dist/
+dist/
+
+# logs
+npm-debug.log*
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
